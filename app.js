@@ -27,9 +27,23 @@ app.get('/recipes/:id', async (req, res) => {
   try {
     const recipe = await getRecipeByID(req.params.id);
     res.status(200).json({ success: true, payload: recipe })
-  } catch(error) {
+  } catch (error) {
     res.status(500).json({ success: false, payload: error })
   }
+});
+
+app.post("/api/recipes", async (req, res) => { 
+
+  try {
+    const newRecipe = await createRecipe(req.body);
+    
+    res.status(200).json({ success: true, payload: newRecipe });
+
+  }
+  catch (error) {
+    res.status(500).json({ success: false, payload: error })
+  }
+  
 })
 
 app.listen(PORT, () => {
