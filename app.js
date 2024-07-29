@@ -9,7 +9,7 @@ import {
 } from "./recipes.js";
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
 
 app.use(express.static("public"));
 app.use(express.json());
@@ -46,6 +46,19 @@ app.post("/api/recipes", async (req, res) => {
   
 })
 
+app.patch("/api/recipes/:id", async (req,res) => {
+
+  try {
+    const updatedRecipe = await updateRecipeByID(req.params.id, req.body);
+    res.status(200).json({ success: true, payload: updatedRecipe })
+  } catch (error) {
+    res.status(500).json({ success: false, payload: error })
+  }
+});
+  
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+
